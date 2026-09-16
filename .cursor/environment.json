@@ -1,0 +1,9 @@
+{
+  "name": "dummy-repo/environment",
+  "install": "pnpm install --frozen-lockfile\npnpm turbo run build --filter=web^...",
+  "start": "dev start backend",
+  "terminals": [
+    { "name": "Web", "command": "pnpm --filter web dev" },
+    { "name": "API", "command": "pnpm --filter @anysphere/server dev" }
+  ]
+}
