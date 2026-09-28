@@ -1,5 +1,5 @@
 {
   "name": "dummy-repo/environment",
-  "install": "node --version\ncorepack enable >/dev/null 2>&1 || true\nROOT=\"$(cd .. && pwd)\"\necho \"Repos root: $ROOT\"\nfor d in \"$ROOT\"/*/; do\n  [ -d \"${d}.git\" ] || continue\n  name=\"$(basename \"$d\")\"\n  if [ -f \"${d}package.json\" ]; then\n    echo \"Installing node deps in ${name}\"\n    ( cd \"$d\" && { corepack pnpm install --frozen-lockfile || npm install; } )\n  fi\n  if [ -f \"${d}.bazelversion\" ]; then\n    echo \"Verifying Bazel toolchain in ${name}\"\n    ( cd \"$d\" && npx -y @bazel/bazelisk@1.19.0 version )\n  fi\ndone\necho \"install: complete\"",
+  "install": "node --version\ncorepack enable >/dev/null 2>&1 || true\nROOT=\"$(cd .. && pwd)\"\necho \"Repos root: $ROOT\"\nfor d in \"$ROOT\"/*/; do\n  [ -d \"${d}.git\" ] || continue\n  if [ -f \"${d}.bazelversion\" ]; then\n    echo \"Verifying Bazel toolchain in $(basename \"$d\")\"\n    ( cd \"$d\" && npx -y @bazel/bazelisk@1.19.0 version )\n  fi\ndone\necho \"install: complete\"",
   "start": "echo \"environment ready: node $(node --version)\""
 }
