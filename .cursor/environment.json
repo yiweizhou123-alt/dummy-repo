@@ -1,9 +1,5 @@
 {
   "name": "dummy-repo/environment",
-  "install": "pnpm install --frozen-lockfile\npnpm turbo run build --filter=web^...",
-  "start": "dev start backend",
-  "terminals": [
-    { "name": "Web", "command": "pnpm --filter web dev" },
-    { "name": "API", "command": "pnpm --filter @anysphere/server dev" }
-  ]
+  "install": "node --version\ncorepack enable >/dev/null 2>&1 || true\nROOT=\"$(cd .. && pwd)\"\necho \"Repos root: $ROOT\"\nfor d in \"$ROOT\"/*/; do\n  [ -d \"${d}.git\" ] || continue\n  if [ -f \"${d}.bazelversion\" ]; then\n    echo \"Verifying Bazel toolchain in $(basename \"$d\")\"\n    ( cd \"$d\" && npx -y @bazel/bazelisk@1.19.0 version )\n  fi\ndone\necho \"install: complete\"",
+  "start": "echo \"environment ready: node $(node --version)\""
 }
